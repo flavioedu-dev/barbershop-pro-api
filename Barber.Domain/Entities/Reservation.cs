@@ -10,7 +10,7 @@ public class Reservation : BaseEntity
     public ReservationStatus Status { get; set; }
     public int BarbershopId { get; set; }
     public Barbershop? Barbershop { get; set; }
-    public int Barberd { get; set; }
+    public int BarberId { get; set; }
     public Barber? Barber { get; set; }
     public int ServiceId { get; set; }
     public Service? Service { get; set; }
