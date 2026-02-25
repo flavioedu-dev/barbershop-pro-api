@@ -1,4 +1,4 @@
-﻿namespace Barber.Domain.DTOs.Users;
+﻿namespace Barber.Application.DTOs.Users;
 
 public record CreateUserDTO(
     string Name,

@@ -1,6 +1,6 @@
 ﻿using Barber.API.Models.Users;
-using Barber.Domain.DTOs.Users;
-using Barber.Domain.Interfaces.Application.Services;
+using Barber.Application.DTOs.Users;
+using Barber.Application.Interfaces;
 using Mapster;
 using Swashbuckle.AspNetCore.Annotations;
 

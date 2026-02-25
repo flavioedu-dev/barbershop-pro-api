@@ -1,7 +1,7 @@
 ﻿using Barber.Domain.Entities.Base;
 using System.Linq.Expressions;
 
-namespace Barber.Domain.Interfaces.Infrastructure.Repositories;
+namespace Barber.Domain.Interfaces.Repositories;
 
 public interface IBaseRepository<TEntity> where TEntity : BaseEntity
 {

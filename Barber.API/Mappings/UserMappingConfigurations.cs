@@ -1,8 +1,8 @@
 ﻿using Barber.API.Models.Users;
-using Barber.Domain.DTOs.Users;
+using Barber.Application.DTOs.Users;
 using Mapster;
 
-namespace Barber.Infrastructure.Mapping;
+namespace Barber.API.Mappings;
 
 public static class UserMappingConfigurations
 {

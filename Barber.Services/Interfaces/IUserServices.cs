@@ -1,7 +1,7 @@
-﻿using Barber.Domain.DTOs.Users;
+﻿using Barber.Application.DTOs.Users;
 using Barber.Domain.Entities;
 
-namespace Barber.Domain.Interfaces.Application.Services;
+namespace Barber.Application.Interfaces;
 
 public interface IUserServices
 {

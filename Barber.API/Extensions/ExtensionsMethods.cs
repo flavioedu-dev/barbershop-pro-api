@@ -1,8 +1,8 @@
 ﻿using Barber.API.Endpoints;
-using Barber.Application.Services.Users;
-using Barber.Domain.Interfaces.Application.Services;
-using Barber.Domain.Interfaces.Infrastructure.Repositories;
-using Barber.Infrastructure.Mapping;
+using Barber.API.Mappings;
+using Barber.Application.Interfaces;
+using Barber.Application.Services;
+using Barber.Domain.Interfaces.Repositories;
 using Barber.Infrastructure.Repositories;
 using Barber.Infrastructure.Repositories.Base;
 

@@ -1,10 +1,10 @@
-﻿using Barber.Domain.DTOs.Users;
+﻿using Barber.Application.DTOs.Users;
+using Barber.Application.Interfaces;
 using Barber.Domain.Entities;
-using Barber.Domain.Interfaces.Application.Services;
-using Barber.Domain.Interfaces.Infrastructure.Repositories;
+using Barber.Domain.Interfaces.Repositories;
 using Mapster;
 
-namespace Barber.Application.Services.Users;
+namespace Barber.Application.Services;
 
 public class UserServices : IUserServices
 {
@@ -20,7 +20,7 @@ public class UserServices : IUserServices
         var existsUser = _userRepository.GetAsync(x => x.Email == createUserModel.Email);
 
         if (existsUser is not null)
-            throw new Exception("Email de usuário já existente.");
+            throw new Exception("Email indisponível.");
 
         var newUser = createUserModel.Adapt<User>();
 

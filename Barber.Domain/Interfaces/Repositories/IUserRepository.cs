@@ -1,6 +1,6 @@
 ﻿using Barber.Domain.Entities;
 
-namespace Barber.Domain.Interfaces.Infrastructure.Repositories;
+namespace Barber.Domain.Interfaces.Repositories;
 
 public interface IUserRepository : IBaseRepository<User>
 {
