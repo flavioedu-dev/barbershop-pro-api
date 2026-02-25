@@ -1,5 +1,5 @@
 ﻿using Barber.Domain.Entities.Base;
-using Barber.Domain.Interfaces.Infrastructure.Repositories;
+using Barber.Domain.Interfaces.Repositories;
 using Barber.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

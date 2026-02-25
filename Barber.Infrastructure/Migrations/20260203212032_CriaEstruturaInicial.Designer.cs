@@ -3,6 +3,7 @@ using System;
 using Barber.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barber.Infrastructure.Migrations
 {
     [DbContext(typeof(BarberDbContext))]
-    partial class BarberDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203212032_CriaEstruturaInicial")]
+    partial class CriaEstruturaInicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,14 +160,17 @@ namespace Barber.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("EndAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time without time zone");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("StartAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time without time zone");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
