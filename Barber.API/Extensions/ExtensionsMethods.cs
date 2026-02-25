@@ -13,6 +13,7 @@ public static class ExtensionsMethods
     public static void AddApplicationDI(this IServiceCollection services)
     {
         services.AddScoped<IUserServices, UserServices>();
+        services.AddScoped<IBarbershopServices, BarbershopServices>();
     }
 
     public static void AddInfrastructureDI(this IServiceCollection services)
@@ -24,6 +25,7 @@ public static class ExtensionsMethods
     public static void AddMapEndpoints(this WebApplication app)
     {
         app.MapUserEndpoints();
+        app.MapBarbershopEndpoints();
     }
 
     public static void RegisterMappings(this IServiceCollection services)
