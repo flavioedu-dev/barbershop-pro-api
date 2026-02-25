@@ -4,9 +4,9 @@ namespace Barber.Domain.Entities;
 
 public class Service : BaseEntity
 {
-    public required int UserId { get; set; }
-    public User? User { get; set; }
-    public required int HaircutId { get; set; }
-    public Haircut? Haircut { get; set; }
-    public required string Customer { get; set; }
+    public required string Name { get; set; }
+    public decimal Price { get; set; }
+    public int DurationInMinutes { get; set; }
+    public int BarbershopId { get; set; }
+    public Barbershop? Barbershop { get; set; }
 }
