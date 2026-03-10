@@ -8,7 +8,6 @@ public class BarberDbContext(DbContextOptions<BarberDbContext> options) : DbCont
     public DbSet<Barbershop> Barbershops { get; }
     public DbSet<User> Users { get; }
     public DbSet<Domain.Entities.Barber> Barbers { get; }
-    public DbSet<Client> Clients { get; }
     public DbSet<Service> Services { get; }
     public DbSet<Reservation> Reservations { get; }
 
