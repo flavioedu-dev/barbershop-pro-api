@@ -1,5 +1,5 @@
 ﻿using Barber.API.Models.Auth;
-using Barber.Application.DTOs.Auth;
+using Barber.Application.DTOs.Requests.Auth;
 using Barber.Application.Interfaces;
 using Mapster;
 using Swashbuckle.AspNetCore.Annotations;

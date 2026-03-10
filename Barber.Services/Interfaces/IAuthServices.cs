@@ -1,9 +1,9 @@
-﻿using Barber.Application.DTOs.Auth;
-using Barber.Domain.Entities;
+﻿using Barber.Application.DTOs.Requests.Auth;
+using Barber.Application.DTOs.Responses;
 
 namespace Barber.Application.Interfaces;
 
 public interface IAuthServices
 {
-    Task<User> RegisterUserAndBarbershop(RegisterUserAndBarbershopDTO registerUserAndBarbershopDTO);
+    Task<DefaultResponseDTO> RegisterUserAndBarbershop(RegisterUserAndBarbershopDTO registerUserAndBarbershopDTO);
 }

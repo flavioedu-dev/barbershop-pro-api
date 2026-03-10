@@ -12,7 +12,7 @@ public static class ExtensionsMethods
 {
     public static void AddApplicationDI(this IServiceCollection services)
     {
-        services.AddScoped<IUserServices, UserServices>();
+        services.AddScoped<IAuthServices, AuthServices>();
         services.AddScoped<IBarbershopServices, BarbershopServices>();
     }
 
@@ -20,16 +20,17 @@ public static class ExtensionsMethods
     {
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IBarbershopRepository, BarbershopRepository>();
     }
 
     public static void AddMapEndpoints(this WebApplication app)
     {
-        app.MapUserEndpoints();
+        app.MapAuthEndpoints();
         app.MapBarbershopEndpoints();
     }
 
     public static void RegisterMappings(this IServiceCollection services)
     {
-        services.UserRegisterMappings();
+        services.AuthRegisterMappings();
     }
 }

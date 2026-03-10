@@ -1,4 +1,4 @@
-﻿namespace Barber.Application.DTOs.Auth;
+﻿namespace Barber.Application.DTOs.Requests.Auth;
 
 public record RegisterUserAndBarbershopDTO(
     string Name,
