@@ -7,6 +7,7 @@ using Barber.Domain.Exceptions;
 using Barber.Domain.Interfaces.Repositories;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
+
 namespace Barber.Application.Services;
 
 public class AuthServices : IAuthServices
@@ -42,5 +43,18 @@ public class AuthServices : IAuthServices
         await _userRepository.SaveAsync();
 
         return new DefaultResponseDTO(true, "Usuário cadastrado com sucesso.");
+    }
+
+    public async Task<DefaultResponseDTO> Login(LoginDTO loginDTO)
+    {
+        var registeredUser = await _userRepository.GetAsync(x => x.Email == loginDTO.Email)
+            ?? throw new CustomResponseException("Email ou senha inválidos.", 404);
+
+        var passwordVerificationResult = new PasswordHasher<User>().VerifyHashedPassword(registeredUser, registeredUser.Password, loginDTO.Password);
+
+        if(passwordVerificationResult != PasswordVerificationResult.Success)
+            throw new CustomResponseException("Email ou senha inválidos.", 404);
+
+        return new DefaultResponseDTO(true, "Login realizado com sucesso.");
     }
 }
