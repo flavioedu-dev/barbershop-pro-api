@@ -1,10 +1,11 @@
-﻿using Barber.API.Endpoints;
+using Barber.API.Endpoints;
 using Barber.API.Mappings;
 using Barber.Application.Interfaces;
 using Barber.Application.Services;
 using Barber.Domain.Interfaces.Repositories;
 using Barber.Infrastructure.Repositories;
 using Barber.Infrastructure.Repositories.Base;
+using FluentValidation;
 
 namespace Barber.API.Extensions;
 
@@ -14,6 +15,8 @@ public static class ExtensionsMethods
     {
         services.AddScoped<IAuthServices, AuthServices>();
         services.AddScoped<IBarbershopServices, BarbershopServices>();
+
+        services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
     }
 
     public static void AddInfrastructureDI(this IServiceCollection services)
