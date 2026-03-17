@@ -1,11 +1,15 @@
 using Barber.API.Endpoints;
 using Barber.API.Mappings;
+using Barber.API.Middlewares;
+using Barber.API.Models.Auth;
+using Barber.API.Validations.Auth;
 using Barber.Application.Interfaces;
 using Barber.Application.Services;
 using Barber.Domain.Interfaces.Repositories;
 using Barber.Infrastructure.Repositories;
 using Barber.Infrastructure.Repositories.Base;
 using FluentValidation;
+using System.Reflection;
 
 namespace Barber.API.Extensions;
 
@@ -16,7 +20,7 @@ public static class ExtensionsMethods
         services.AddScoped<IAuthServices, AuthServices>();
         services.AddScoped<IBarbershopServices, BarbershopServices>();
 
-        services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     public static void AddInfrastructureDI(this IServiceCollection services)
@@ -30,6 +34,11 @@ public static class ExtensionsMethods
     {
         app.MapAuthEndpoints();
         app.MapBarbershopEndpoints();
+    }
+
+    public static void AddMiddlewares(this WebApplication app)
+    {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
     }
 
     public static void RegisterMappings(this IServiceCollection services)

@@ -3,6 +3,7 @@
 public class CustomResponseException : Exception
 {
     public int? StatusCode { get; set; }
+    public Dictionary<string, string[]>? Errors { get; set; }
 
 
     public CustomResponseException()

@@ -1,11 +1,11 @@
-using Barber.Application.DTOs.Requests.Auth;
+using Barber.API.Models.Auth;
 using FluentValidation;
 
 namespace Barber.API.Validations.Auth;
 
-public class RegisterUserAndBarbershopDTOValidator : AbstractValidator<RegisterUserAndBarbershopDTO>
+public class RegisterUserAndBarbershopModelValidator : AbstractValidator<RegisterUserAndBarbershopModel>
 {
-    public RegisterUserAndBarbershopDTOValidator()
+    public RegisterUserAndBarbershopModelValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Nome é obrigatório.")

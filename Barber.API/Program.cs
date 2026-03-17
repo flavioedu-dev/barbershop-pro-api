@@ -32,5 +32,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.AddMapEndpoints();
+app.AddMiddlewares();
 
 app.Run();
