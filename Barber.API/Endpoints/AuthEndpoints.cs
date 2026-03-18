@@ -25,16 +25,7 @@ public static class AuthEndpoints
         var validationResult = await validator.ValidateAsync(registerUserAndBarbershopModel);
 
         if (!validationResult.IsValid)
-        {
-            var errors = validationResult.Errors
-                .GroupBy(err => err.PropertyName)
-                .ToDictionary(
-                    group => group.Key,
-                    group => group.Select(e => e.ErrorMessage).ToArray()
-                );
-
-            throw new InputValidationException(errors);
-        }
+            throw new InputValidationException(validationResult);
 
         var registerUserAndBarbershopDTO = registerUserAndBarbershopModel.Adapt<RegisterUserAndBarbershopDTO>();
 
@@ -44,8 +35,13 @@ public static class AuthEndpoints
     }
 
     [SwaggerOperation(Summary = "Realizar login de usuário.")]
-    public static async Task<IResult> Login([FromBody] LoginModel loginModel, IAuthServices authServices)
+    public static async Task<IResult> Login([FromBody] LoginModel loginModel, IValidator<LoginModel> validator, IAuthServices authServices)
     {
+        var validationResult = await validator.ValidateAsync(loginModel);
+
+        if (!validationResult.IsValid)
+            throw new InputValidationException(validationResult);
+
         var loginDTO = loginModel.Adapt<LoginDTO>();
 
         var res = await authServices.Login(loginDTO);

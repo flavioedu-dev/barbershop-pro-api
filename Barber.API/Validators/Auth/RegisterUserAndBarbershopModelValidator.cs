@@ -1,7 +1,7 @@
 using Barber.API.Models.Auth;
 using FluentValidation;
 
-namespace Barber.API.Validations.Auth;
+namespace Barber.API.Validators.Auth;
 
 public class RegisterUserAndBarbershopModelValidator : AbstractValidator<RegisterUserAndBarbershopModel>
 {
