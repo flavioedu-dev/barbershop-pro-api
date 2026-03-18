@@ -23,10 +23,13 @@ public class AuthServices : IAuthServices
 
     public async Task<DefaultResponseDTO> RegisterUserAndBarbershop(RegisterUserAndBarbershopDTO registerUserAndBarbershopDTO)
     {
+        if (registerUserAndBarbershopDTO.Password != registerUserAndBarbershopDTO.ConfirmPassword)
+            throw new CustomResponseException("Senhas não correspondem,.", 400);
+
         var existsUser = await _userRepository.GetAsync(x => x.Email == registerUserAndBarbershopDTO.Email);
 
         if (existsUser is not null)
-            throw new CustomResponseException("Email indisponível.", 404);
+            throw new CustomResponseException("Email indisponível.", 400);
 
         Barbershop newBarbershop = registerUserAndBarbershopDTO.Adapt<Barbershop>();
         newBarbershop.Slug = $"{newBarbershop.Name.ToLower().Replace(" ", "-")}-{Guid.NewGuid().ToString().Substring(0, 8)}";
@@ -48,12 +51,12 @@ public class AuthServices : IAuthServices
     public async Task<DefaultResponseDTO> Login(LoginDTO loginDTO)
     {
         var registeredUser = await _userRepository.GetAsync(x => x.Email == loginDTO.Email)
-            ?? throw new CustomResponseException("Email ou senha inválidos.", 404);
+            ?? throw new CustomResponseException("Credenciais inválidas.", 401);
 
         var passwordVerificationResult = new PasswordHasher<User>().VerifyHashedPassword(registeredUser, registeredUser.Password, loginDTO.Password);
 
         if(passwordVerificationResult != PasswordVerificationResult.Success)
-            throw new CustomResponseException("Email ou senha inválidos.", 404);
+            throw new CustomResponseException("Credenciais inválidas.", 401);
 
         return new DefaultResponseDTO(true, "Login realizado com sucesso.");
     }

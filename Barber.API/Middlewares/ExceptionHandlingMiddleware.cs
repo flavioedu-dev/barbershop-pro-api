@@ -20,7 +20,7 @@ public class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
-        catch(PropertyValidationException ex)
+        catch(InputValidationException ex)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

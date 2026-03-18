@@ -33,7 +33,7 @@ public static class AuthEndpoints
                     group => group.Select(e => e.ErrorMessage).ToArray()
                 );
 
-            throw new PropertyValidationException(errors);
+            throw new InputValidationException(errors);
         }
 
         var registerUserAndBarbershopDTO = registerUserAndBarbershopModel.Adapt<RegisterUserAndBarbershopDTO>();
