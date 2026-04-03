@@ -95,9 +95,14 @@ namespace Barber.Infrastructure.Migrations
 
             modelBuilder.Entity("Barber.Domain.Entities.RefreshToken", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -109,7 +114,6 @@ namespace Barber.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ReplacedByTokenHash")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RevokedAt")
@@ -121,6 +125,9 @@ namespace Barber.Infrastructure.Migrations
                     b.Property<string>("TokenHash")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserId")
                         .IsRequired()

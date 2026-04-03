@@ -1,16 +1,16 @@
-﻿namespace Barber.Domain.Entities;
+﻿using Barber.Domain.Entities.Base;
 
-public class RefreshToken
+namespace Barber.Domain.Entities;
+
+public class RefreshToken : BaseEntity
 {
-    public Guid Id { get; set; }
     public required string UserId { get; set; }
     public required string TokenHash { get; set; }
 
     public DateTime ExpirationDate { get; set; }
-    public DateTime CreatedAt { get; set; }
 
     public DateTime? RevokedAt { get; set; }
-    public required string ReplacedByTokenHash { get; set; }
+    public string? ReplacedByTokenHash { get; set; }
 
     public string? CreatedByIp { get; set; }
     public string? RevokedByIp { get; set; }
