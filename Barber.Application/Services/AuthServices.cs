@@ -15,13 +15,15 @@ public class AuthServices : IAuthServices
 {
     private readonly IUserRepository _userRepository;
     private readonly IBarbershopRepository _barbershopRepository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly ITokenService _tokenService;
 
-    public AuthServices(IUserRepository userRepository, IBarbershopRepository barbershopRepository, ITokenService tokenService)
+    public AuthServices(IUserRepository userRepository, IBarbershopRepository barbershopRepository, IRefreshTokenRepository refreshTokenRepository, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _barbershopRepository = barbershopRepository;
         _tokenService = tokenService;
+        _refreshTokenRepository = refreshTokenRepository;
     }
 
     public async Task<DefaultResponseDTO> RegisterUserAndBarbershop(RegisterUserAndBarbershopDTO registerUserAndBarbershopDTO)
@@ -64,5 +66,12 @@ public class AuthServices : IAuthServices
         var generatedTokens = await _tokenService.GenerateTokens(registeredUser.Id, registeredUser.Email, registeredUser.Role);
 
         return generatedTokens;
+    }
+
+    public async Task<DefaultResponseDTO> Logout(string refreshToken)
+    {
+        bool success = await _tokenService.InvalidateRefreshToken(refreshToken);
+
+        return new DefaultResponseDTO(success, "Logout realizado com sucesso.");
     }
 }

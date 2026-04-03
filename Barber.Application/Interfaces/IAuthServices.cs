@@ -8,4 +8,5 @@ public interface IAuthServices
 {
     Task<DefaultResponseDTO> RegisterUserAndBarbershop(RegisterUserAndBarbershopDTO registerUserAndBarbershopDTO);
     Task<GenerateTokensResponseDTO> Login(LoginDTO loginDTO);
+    Task<DefaultResponseDTO> Logout(string refreshToken);
 }

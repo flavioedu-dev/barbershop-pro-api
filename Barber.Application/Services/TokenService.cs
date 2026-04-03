@@ -3,6 +3,7 @@ using Barber.Application.DTOs.Responses.Token;
 using Barber.Application.Interfaces;
 using Barber.Domain.Entities;
 using Barber.Domain.Enums;
+using Barber.Domain.Exceptions;
 using Barber.Domain.Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -65,6 +66,20 @@ public class TokenService : ITokenService
             AccessToken: new JwtSecurityTokenHandler().WriteToken(accessToken),
             RefreshToken: refreshTokenNoHash
         );
+    }
+
+    public async Task<bool> InvalidateRefreshToken(string refreshToken)
+    {
+        var hashedToken = HashToken(refreshToken);
+
+        var refreshTokenExists = await _refreshTokenRepository.GetAsync(x => x.TokenHash == hashedToken && x.RevokedAt == null)
+            ?? throw new CustomResponseException("RefreshToken inválido.", 404);
+
+        refreshTokenExists.RevokedAt = DateTime.UtcNow;
+
+        await _refreshTokenRepository.SaveAsync();
+
+        return true;
     }
 
     private static string GenerateSecureToken()

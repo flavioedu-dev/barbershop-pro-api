@@ -4,6 +4,7 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Exceptions;
 using FluentValidation;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -17,6 +18,7 @@ public static class AuthEndpoints
 
         authEndpoints.MapPost("/register", RegisterUserAndBarbershop);
         authEndpoints.MapPost("/login", Login);
+        authEndpoints.MapPost("/logout", Logout);
     }
 
     [SwaggerOperation(Summary = "Cadastrar novo usuário e sua barbearia.")]
@@ -45,6 +47,15 @@ public static class AuthEndpoints
         var loginDTO = loginModel.Adapt<LoginDTO>();
 
         var res = await authServices.Login(loginDTO);
+
+        return Results.Ok(res);
+    }
+
+    [Authorize]
+    [SwaggerOperation(Summary = "Realizar logout de usuário.")]
+    public static async Task<IResult> Logout([FromBody] LogoutModel logoutModel, IAuthServices authServices)
+    {
+        var res = await authServices.Logout(logoutModel.RefreshToken);
 
         return Results.Ok(res);
     }
