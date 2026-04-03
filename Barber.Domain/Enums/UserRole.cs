@@ -1,6 +1,6 @@
 ﻿namespace Barber.Domain.Enums;
 
-public enum RoleType
+public enum UserRole
 {
     Default,
     Admin

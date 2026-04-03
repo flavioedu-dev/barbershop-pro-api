@@ -2,7 +2,8 @@
 
 public enum ReservationStatus
 {
-    Active,
+    Created,
+    Confirmed,
     Canceled,
     Finished
 }
