@@ -10,6 +10,7 @@ public class BarberDbContext(DbContextOptions<BarberDbContext> options) : DbCont
     public DbSet<Domain.Entities.Barber> Barbers { get; }
     public DbSet<Service> Services { get; }
     public DbSet<Reservation> Reservations { get; }
+    public DbSet<RefreshToken> RefreshTokens { get; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
