@@ -1,5 +1,6 @@
 ﻿using Barber.Application.DTOs.Requests.Auth;
 using Barber.Application.DTOs.Responses;
+using Barber.Application.DTOs.Responses.Token;
 using Barber.Application.Interfaces;
 using Barber.Domain.Entities;
 using Barber.Domain.Enums;
@@ -50,18 +51,18 @@ public class AuthServices : IAuthServices
         return new DefaultResponseDTO(true, "Usuário cadastrado com sucesso.");
     }
 
-    public async Task<DefaultResponseDTO> Login(LoginDTO loginDTO)
+    public async Task<GenerateTokensResponseDTO> Login(LoginDTO loginDTO)
     {
         var registeredUser = await _userRepository.GetAsync(x => x.Email == loginDTO.Email)
             ?? throw new CustomResponseException("Credenciais inválidas.", 401);
 
         var passwordVerificationResult = new PasswordHasher<User>().VerifyHashedPassword(registeredUser, registeredUser.Password, loginDTO.Password);
 
-        if(passwordVerificationResult != PasswordVerificationResult.Success)
+        if (passwordVerificationResult != PasswordVerificationResult.Success)
             throw new CustomResponseException("Credenciais inválidas.", 401);
 
-        var generatedTokens = _tokenService.GenerateTokens(registeredUser.Id, registeredUser.Email, registeredUser.Role);
+        var generatedTokens = await _tokenService.GenerateTokens(registeredUser.Id, registeredUser.Email, registeredUser.Role);
 
-        return new DefaultResponseDTO(true, "Login realizado com sucesso.");
+        return generatedTokens;
     }
 }

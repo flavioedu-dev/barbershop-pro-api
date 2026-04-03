@@ -19,6 +19,9 @@ services.AddDbContext<BarberDbContext>(options =>
 services.AddInfrastructureDI();
 services.AddApplicationDI();
 services.RegisterMappings();
+services.AddJwt(builder.Configuration);
+
+services.AddAuthorization();
 
 var app = builder.Build();
 
