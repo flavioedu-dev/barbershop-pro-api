@@ -28,6 +28,7 @@ public static class ExtensionsMethods
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBarbershopRepository, BarbershopRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
     }
 
     public static void AddMapEndpoints(this WebApplication app)
