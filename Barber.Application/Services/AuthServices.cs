@@ -14,11 +14,13 @@ public class AuthServices : IAuthServices
 {
     private readonly IUserRepository _userRepository;
     private readonly IBarbershopRepository _barbershopRepository;
+    private readonly ITokenService _tokenService;
 
-    public AuthServices(IUserRepository userRepository, IBarbershopRepository barbershopRepository)
+    public AuthServices(IUserRepository userRepository, IBarbershopRepository barbershopRepository, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _barbershopRepository = barbershopRepository;
+        _tokenService = tokenService;
     }
 
     public async Task<DefaultResponseDTO> RegisterUserAndBarbershop(RegisterUserAndBarbershopDTO registerUserAndBarbershopDTO)
@@ -57,6 +59,8 @@ public class AuthServices : IAuthServices
 
         if(passwordVerificationResult != PasswordVerificationResult.Success)
             throw new CustomResponseException("Credenciais inválidas.", 401);
+
+        var generatedTokens = _tokenService.GenerateTokens(registeredUser.Id, registeredUser.Email, registeredUser.Role);
 
         return new DefaultResponseDTO(true, "Login realizado com sucesso.");
     }

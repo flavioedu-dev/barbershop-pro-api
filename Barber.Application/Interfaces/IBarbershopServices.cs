@@ -1,4 +1,4 @@
-﻿using Barber.Application.DTOs.Barbershop;
+﻿using Barber.Application.DTOs.Requests.Barbershop;
 using Barber.Domain.Entities;
 
 namespace Barber.Application.Interfaces;
