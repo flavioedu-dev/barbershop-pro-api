@@ -53,8 +53,13 @@ public static class AuthEndpoints
 
     [Authorize]
     [SwaggerOperation(Summary = "Realizar logout de usuário.")]
-    public static async Task<IResult> Logout([FromBody] LogoutModel logoutModel, IAuthServices authServices)
+    public static async Task<IResult> Logout([FromBody] LogoutModel logoutModel, IValidator<LogoutModel> validator, IAuthServices authServices)
     {
+        var validationResult = await validator.ValidateAsync(logoutModel);
+
+        if (!validationResult.IsValid)
+            throw new InputValidationException(validationResult);
+
         var res = await authServices.Logout(logoutModel.RefreshToken);
 
         return Results.Ok(res);
