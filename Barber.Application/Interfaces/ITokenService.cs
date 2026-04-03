@@ -5,6 +5,7 @@ namespace Barber.Application.Interfaces;
 
 public interface ITokenService
 {
-    Task<GenerateTokensResponseDTO> GenerateTokens(int userId, string email, UserRole role);
+    Task<GenerateTokensResponseDTO> GenerateTokens(int userId);
     Task<bool> InvalidateRefreshToken(string refreshToken);
+    Task<GenerateTokensResponseDTO> RevalidateJwt(string refreshToken);
 }

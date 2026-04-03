@@ -50,7 +50,6 @@ public static class ExtensionsMethods
         var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
         var key = Encoding.UTF8.GetBytes(jwtSettings!.SecretKey);
 
-
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

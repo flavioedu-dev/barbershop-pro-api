@@ -25,7 +25,7 @@ public class TokenService : ITokenService
         _refreshTokenRepository = refreshTokenRepository;
     }
 
-    public async Task<GenerateTokensResponseDTO> GenerateTokens(int userId, string email, UserRole role)
+    public async Task<GenerateTokensResponseDTO> GenerateTokens(int userId)
     {
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_jwtSettings!.SecretKey));
@@ -36,8 +36,6 @@ public class TokenService : ITokenService
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, email),
-            new Claim(ClaimTypes.Role, role.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
@@ -81,6 +79,23 @@ public class TokenService : ITokenService
 
         return true;
     }
+    public async Task<GenerateTokensResponseDTO> RevalidateJwt(string refreshToken)
+    {
+        var hashedToken = HashToken(refreshToken);
+
+        var refreshTokenExists = await _refreshTokenRepository.GetAsync(x => x.TokenHash == hashedToken && x.RevokedAt == null)
+           ?? throw new CustomResponseException("RefreshToken inválido.", 404);
+
+        if (!refreshTokenExists.IsActive)
+            throw new CustomResponseException("RefreshToken inválido.", 401);
+
+        refreshTokenExists.RevokedAt = DateTime.UtcNow;
+
+        var newTokens = await GenerateTokens(int.Parse(refreshTokenExists.UserId));
+
+        return newTokens;
+    }
+
 
     private static string GenerateSecureToken()
     {

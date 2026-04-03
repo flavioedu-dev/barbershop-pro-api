@@ -63,7 +63,7 @@ public class AuthServices : IAuthServices
         if (passwordVerificationResult != PasswordVerificationResult.Success)
             throw new CustomResponseException("Credenciais inválidas.", 401);
 
-        var generatedTokens = await _tokenService.GenerateTokens(registeredUser.Id, registeredUser.Email, registeredUser.Role);
+        var generatedTokens = await _tokenService.GenerateTokens(registeredUser.Id);
 
         return generatedTokens;
     }

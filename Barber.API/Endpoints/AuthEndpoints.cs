@@ -19,6 +19,7 @@ public static class AuthEndpoints
         authEndpoints.MapPost("/register", RegisterUserAndBarbershop);
         authEndpoints.MapPost("/login", Login);
         authEndpoints.MapPost("/logout", Logout);
+        authEndpoints.MapPost("/revalidateToken", RevalidateToken);
     }
 
     [SwaggerOperation(Summary = "Cadastrar novo usuário e sua barbearia.")]
@@ -61,6 +62,19 @@ public static class AuthEndpoints
             throw new InputValidationException(validationResult);
 
         var res = await authServices.Logout(logoutModel.RefreshToken);
+
+        return Results.Ok(res);
+    }
+
+    [SwaggerOperation(Summary = "Realizar renovação do token JWT.")]
+    public static async Task<IResult> RevalidateToken([FromBody] RevalidateTokenModel revalidateTokenModel, IValidator<RevalidateTokenModel> validator, ITokenService tokenService)
+    {
+        var validationResult = await validator.ValidateAsync(revalidateTokenModel);
+
+        if (!validationResult.IsValid)
+            throw new InputValidationException(validationResult);
+
+        var res = await tokenService.RevalidateJwt(revalidateTokenModel.RefreshToken);
 
         return Results.Ok(res);
     }
